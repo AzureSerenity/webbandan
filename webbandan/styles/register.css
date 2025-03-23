@@ -1,0 +1,80 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+.container {
+    background-color: #fff;
+    border-radius: 5px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    width: 350px;
+}
+h2 {
+    text-align: center;
+    color: #333;
+    margin-bottom: 20px;
+}
+.form-group {
+    margin-bottom: 15px;
+}
+input[type="text"],
+input[type="email"],
+input[type="password"] {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    box-sizing: border-box;
+    font-size: 14px;
+}
+button {
+    width: 100%;
+    padding: 10px;
+    background-color: #FFD000;
+    border: none;
+    color: #333;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: bold;
+}
+button:hover {
+    background-color: #E5BC00;
+}
+.success-message {
+    color: green;
+    margin-bottom: 15px;
+    text-align: center;
+}
+.error-message {
+    color: red;
+    margin-bottom: 15px;
+    text-align: center;
+}
+.links {
+    text-align: center;
+    margin-top: 15px;
+}
+a {
+    color: #FFD000;
+    text-decoration: none;
+    font-weight: bold;
+}
+a:hover {
+    text-decoration: underline;
+}
+.logo {
+    text-align: center;
+    margin-bottom: 20px;
+}
+.logo h1 {
+    color: #333;
+    font-size: 24px;
+    margin: 0;
+}
