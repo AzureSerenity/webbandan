@@ -50,7 +50,7 @@
             $hinhAnh = $targetFile;
         }
 
-        $updateQuery = "UPDATE instrument SET ten = :ten, loaiDan = :loaiDan, xuatXu = :xuatXu, 
+        $updateQuery = "UPDATE instrument SET ten = :ten, loaiDan_id = :loaiDan, xuatXu = :xuatXu, 
                         giaThanh = :giaThanh, hang = :hang, hinhAnh = :hinhAnh, moTa = :moTa 
                         WHERE ma = :ma";
         $stmt = $conn->prepare($updateQuery);
@@ -89,10 +89,16 @@
                 <label for="loaiDan">Loại đàn</label>
                 <select id="loaiDan" name="loaiDan" required>
                     <option value="">-- Chọn loại đàn --</option>
-                    <option value="Guitar" <?= $dan['loaiDan'] == 'Guitar' ? 'selected' : '' ?>>Guitar</option>
-                    <option value="Organ" <?= $dan['loaiDan'] == 'Organ' ? 'selected' : '' ?>>Organ</option>
-                    <option value="Piano" <?= $dan['loaiDan'] == 'Piano' ? 'selected' : '' ?>>Piano</option>
-                    <option value="Ukulele" <?= $dan['loaiDan'] == 'Ukulele' ? 'selected' : '' ?>>Ukulele</option>
+                    <?php
+                        $query = "SELECT * FROM loaidan";
+                        $stmt = $conn->prepare($query);
+                        $stmt->execute();
+                        $loaiDanList = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+                        foreach ($loaiDanList as $loaiDan) {
+                            echo "<option value='" . $loaiDan["ma"] . "'>" . $loaiDan["tenLoai"] . "</option>";
+                        }
+                    ?>
                 </select>
             </div>
             

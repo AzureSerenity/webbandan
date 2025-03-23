@@ -1,0 +1,2 @@
+- sua database (them table loaiDan)
+- them crud loaiDan

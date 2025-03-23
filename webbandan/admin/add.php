@@ -35,10 +35,10 @@
             move_uploaded_file($_FILES["hinhAnh"]["tmp_name"], $targetFile);
             $hinhAnh = $targetFile;
         } else {
-            die("Lỗi khi tải ảnh lên!");
+            die("Lỗi khi tải ảnh!");
         }
 
-        $query = "INSERT INTO instrument (ten, loaiDan, xuatXu, giaThanh, hang, hinhAnh, moTa) VALUES 
+        $query = "INSERT INTO instrument (ten, loaiDan_id, xuatXu, giaThanh, hang, hinhAnh, moTa) VALUES 
                 (:ten, :loaiDan, :xuatXu, :giaThanh, :hang, :hinhAnh, :moTa)";
         $stmt = $conn->prepare($query);
         $stmt->execute([
@@ -75,9 +75,16 @@
                 <label for="loaiDan">Loại đàn</label>
                 <select id="loaiDan" name="loaiDan" required>
                     <option value="">-- Chọn loại đàn --</option>
-                    <option value="Guitar">Guitar</option>
-                    <option value="Organ">Organ</option>
-                    <option value="Piano">Piano</option>
+                    <?php
+                        $query = "SELECT * FROM loaidan";
+                        $stmt = $conn->prepare($query);
+                        $stmt->execute();
+                        $loaiDanList = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+                        foreach ($loaiDanList as $loaiDan) {
+                            echo "<option value='" . $loaiDan["ma"] . "'>" . $loaiDan["tenLoai"] . "</option>";
+                        }
+                    ?>
                 </select>
             </div>
             
@@ -108,6 +115,7 @@
             
             <div class="actions">
                 <a href="list.php" class="btn btn-secondary">Quay lại</a>
+                <a href="add_loaiDan.php" class="btn btn-secondary">Thêm loại đàn</a>
                 <button type="submit" class="btn btn-primary">THÊM ĐÀN</button>
             </div>
         </form>

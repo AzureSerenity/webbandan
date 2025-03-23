@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Máy chủ: 127.0.0.1
--- Thời gian đã tạo: Th3 23, 2025 lúc 10:13 AM
+-- Thời gian đã tạo: Th3 23, 2025 lúc 06:57 PM
 -- Phiên bản máy phục vụ: 10.4.32-MariaDB
 -- Phiên bản PHP: 8.0.30
 
@@ -30,20 +30,41 @@ SET time_zone = "+00:00";
 CREATE TABLE `instrument` (
   `ma` int(11) NOT NULL,
   `ten` varchar(50) NOT NULL,
-  `loaiDan` enum('guitar','piano','organ') NOT NULL,
   `xuatXu` varchar(50) DEFAULT NULL,
   `giaThanh` decimal(15,2) NOT NULL,
   `hang` varchar(100) DEFAULT NULL,
   `hinhAnh` varchar(255) DEFAULT NULL,
-  `moTa` text DEFAULT NULL
+  `moTa` text DEFAULT NULL,
+  `loaiDan_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Đang đổ dữ liệu cho bảng `instrument`
 --
 
-INSERT INTO `instrument` (`ma`, `ten`, `loaiDan`, `xuatXu`, `giaThanh`, `hang`, `hinhAnh`, `moTa`) VALUES
-(1, 'TAYLOR PS14CE HONDURAN ROSEWOOD', 'guitar', 'North California ', 355050000.00, 'TAYLOR', '../uploads/headpat.gif', '');
+INSERT INTO `instrument` (`ma`, `ten`, `xuatXu`, `giaThanh`, `hang`, `hinhAnh`, `moTa`, `loaiDan_id`) VALUES
+(4, 'TAYLOR PS14CE HONDURAN ROSEWOOD', 'North California ', 355050000.00, 'TAYLOR', '../uploads/headpat.gif', '', 3);
+
+-- --------------------------------------------------------
+
+--
+-- Cấu trúc bảng cho bảng `loaidan`
+--
+
+CREATE TABLE `loaidan` (
+  `ma` int(11) NOT NULL,
+  `tenLoai` varchar(50) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Đang đổ dữ liệu cho bảng `loaidan`
+--
+
+INSERT INTO `loaidan` (`ma`, `tenLoai`) VALUES
+(1, 'Piano'),
+(2, 'Organ'),
+(3, 'Guitar'),
+(4, 'Ukulele ');
 
 -- --------------------------------------------------------
 
@@ -66,7 +87,8 @@ CREATE TABLE `nguoidung` (
 --
 
 INSERT INTO `nguoidung` (`ma`, `hoTen`, `email`, `matKhau`, `soDienThoai`, `diaChi`, `phuongThucThanhToan`) VALUES
-(6, 'admin', 'admin@gmail.com', '$2y$10$b735MovrWL49iuiRMuSjlOfwMJUukc6aSGdL.hDqplp31WR3xI8V6', '0123456789', NULL, NULL);
+(6, 'admin', 'admin@gmail.com', '$2y$10$b735MovrWL49iuiRMuSjlOfwMJUukc6aSGdL.hDqplp31WR3xI8V6', '0123456789', NULL, NULL),
+(7, 'hehe', 'nag13032018@gmail.com', '$2y$10$ykg0aa94pD1wbziW4Rn7iOIqqjCkvbgzTiSESmE3le7Ty/4HgWe2i', '0123456789', NULL, NULL);
 
 --
 -- Chỉ mục cho các bảng đã đổ
@@ -76,6 +98,13 @@ INSERT INTO `nguoidung` (`ma`, `hoTen`, `email`, `matKhau`, `soDienThoai`, `diaC
 -- Chỉ mục cho bảng `instrument`
 --
 ALTER TABLE `instrument`
+  ADD PRIMARY KEY (`ma`),
+  ADD KEY `fk_instrument_loaidan` (`loaiDan_id`);
+
+--
+-- Chỉ mục cho bảng `loaidan`
+--
+ALTER TABLE `loaidan`
   ADD PRIMARY KEY (`ma`);
 
 --
@@ -93,13 +122,29 @@ ALTER TABLE `nguoidung`
 -- AUTO_INCREMENT cho bảng `instrument`
 --
 ALTER TABLE `instrument`
-  MODIFY `ma` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `ma` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+
+--
+-- AUTO_INCREMENT cho bảng `loaidan`
+--
+ALTER TABLE `loaidan`
+  MODIFY `ma` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT cho bảng `nguoidung`
 --
 ALTER TABLE `nguoidung`
-  MODIFY `ma` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `ma` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+
+--
+-- Các ràng buộc cho các bảng đã đổ
+--
+
+--
+-- Các ràng buộc cho bảng `instrument`
+--
+ALTER TABLE `instrument`
+  ADD CONSTRAINT `fk_instrument_loaidan` FOREIGN KEY (`loaiDan_id`) REFERENCES `loaidan` (`ma`) ON DELETE CASCADE ON UPDATE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

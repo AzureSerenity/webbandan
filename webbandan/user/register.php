@@ -25,7 +25,7 @@
                 $hoTen = $_POST["hoTen"];
                 $email = $_POST["email"];
                 $dienThoai = $_POST["soDienThoai"];
-                $matKhau = password_hash($_POST["matKhau"], PASSWORD_DEFAULT);
+                $matKhau = password_hash($_POST["matKhau"], PASSWORD_DEFAULT); // ma hoa mat khau
 
                 $query = "INSERT INTO nguoidung (hoTen, email, soDienThoai, matKhau) VALUES (:hoTen, :email, :soDienThoai, :matKhau)";
                 $stmt = $conn->prepare($query);

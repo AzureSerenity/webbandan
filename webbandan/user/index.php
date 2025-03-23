@@ -5,7 +5,7 @@
     $database = new Database();
     $conn = $database->dbConnection();
 
-    $query = "SELECT * FROM instrument";
+    $query = "SELECT instrument.*, loaidan.tenLoai FROM instrument JOIN loaidan ON instrument.loaiDan_id = loaidan.ma";
     $stmt = $conn->prepare($query);
     $stmt->execute();
     $danList = $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -16,6 +16,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
     <title>Trang chủ</title>
 </head>
 <body>
@@ -34,33 +35,39 @@
     </div>
 
     <h2>Danh sách đàn</h2>
-    <table border="1">
-        <tr>
-            <th>Tên đàn</th>
-            <th>Loại đàn</th>
-            <th>Xuất xứ</th>
-            <th>Giá thành</th>
-            <th>Hãng</th>
-            <th>Hình ảnh</th>
-            <th>Mô tả</th>
-        </tr>
-        <?php foreach ($danList as $dan): ?>
-        <tr>
-            <td><?php echo htmlspecialchars($dan["ten"]); ?></td>
-            <td><?php echo htmlspecialchars($dan["loaiDan"]); ?></td>
-            <td><?php echo htmlspecialchars($dan["xuatXu"]); ?></td>
-            <td><?php echo number_format($dan["giaThanh"], 0, ',', '.') . " VND"; ?></td>
-            <td><?php echo htmlspecialchars($dan["hang"]); ?></td>
-            <td>
-                <?php if (!empty($dan["hinhAnh"])): ?>
-                    <img src="<?php echo htmlspecialchars($dan["hinhAnh"]); ?>" width="100">
-                <?php else: ?>
-                    Không có ảnh
-                <?php endif; ?>
-            </td>
-            <td><?php echo htmlspecialchars($dan["moTa"]); ?></td>
-        </tr>
-        <?php endforeach; ?>
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Tên đàn</th>
+                <th>Loại đàn</th>
+                <th>Xuất xứ</th>
+                <th>Giá thành</th>
+                <th>Hãng</th>
+                <th>Hình ảnh</th>
+                <th>Mô tả</th>
+            </tr>
+        </thead>
+        <tbody>
+            <?php foreach ($danList as $dan): ?>
+                <tr>
+                    <td><?php echo htmlspecialchars($dan["ten"]); ?></td>
+                    <td><?php echo htmlspecialchars($dan["tenLoai"]); ?></td>
+                    <td><?php echo htmlspecialchars($dan["xuatXu"]); ?></td>
+                    <td><?php echo number_format($dan["giaThanh"], 0, ',', '.') . " VND"; ?></td>
+                    <td><?php echo htmlspecialchars($dan["hang"]); ?></td>
+                    <td>
+                        <?php if (!empty($dan["hinhAnh"])): ?>
+                            <img src="<?php echo htmlspecialchars($dan["hinhAnh"]); ?>" width="100">
+                        <?php else: ?>
+                            Không có ảnh
+                        <?php endif; ?>
+                    </td>
+                    <td><?php echo htmlspecialchars($dan["moTa"]); ?></td>
+                </tr>
+            <?php endforeach; ?>
+        </tbody>
     </table>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
